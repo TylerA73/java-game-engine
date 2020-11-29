@@ -1,9 +1,12 @@
 package com.javaengine;
 
+import com.javaengine.camera.Camera;
+import com.javaengine.input.Input;
 import com.javaengine.primitives.Plane;
 import com.javaengine.primitives.Cube;
 import com.javaengine.primitives.Primitive;
 import com.javaengine.shader.ShaderProgram;
+import org.joml.Matrix4f;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -24,6 +27,9 @@ public class Window {
     private long window;
 
     private Primitive object;
+    private Camera camera;
+    private Input input;
+
 
 
     public void run() {
@@ -73,6 +79,7 @@ public class Window {
             }
 
 
+            // Draw cube
             glEnableVertexAttribArray(0);
             glBindBuffer(GL_ARRAY_BUFFER, object.getPositionBuffer());
             glDrawArrays(GL_TRIANGLES, 0, object.getModel().getVertices().length);
@@ -86,6 +93,9 @@ public class Window {
     }
 
     private void init() {
+        // Initiate the camera
+        this.camera = new Camera();
+
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
         GLFWErrorCallback.createPrint(System.err).set();
